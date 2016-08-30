@@ -100,10 +100,13 @@ describe('View', function () {
     assert.isTrue(view.collection instanceof Collection);
   });
 
-  it('template loops over the collection and spits out some titles', function () {
+  it('the view renders to the page', function () {
+    $("body").append('<ul id="js-view-region"></ul>');
+
     let collection = new Collection();
     let view = new View({collection: collection});
 
+    // I couldn't quite figure out howto stub/mock the ajax call, so this is to simulate a successful fetch
     collection.add({
       "kind": "books#volume",
       "id": "4pgQfXQvekcC",
@@ -116,8 +119,9 @@ describe('View', function () {
       "publisher": "\"O'Reilly Media, Inc.\"",
       "publishedDate": "2013-06-1"
     });
+    collection.trigger('sync');
 
-    assert.isTrue(view.template({'books': collection.toJSON()}).indexOf('Learning Python') >= 0);
+    assert.isTrue($('#4pgQfXQvekcC').html() === "Learning Python");
   });
 
 });
