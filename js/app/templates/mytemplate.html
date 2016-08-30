@@ -1,1 +1,4 @@
-<p> My template </p>
+<h2>Python Books</h2>
+<% _.forEach(books, function(book) { %>
+  <div id="<%- book.id %>"><%- book.title %></div>
+<% }); %>

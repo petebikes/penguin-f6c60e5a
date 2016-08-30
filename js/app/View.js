@@ -10,11 +10,20 @@ define(function (require) {
 
     el: '#js-view-region',
 
-    template: myTemplate(),
+    template: myTemplate,
 
-    initialize: function () {
-      this.$el.html(this.template);
-    }
+    initialize: function (options) {
+      //this.$el.html(this.template);
+
+      this.collection = _.result(options, 'collection', new Collection());
+      this.listenTo(this.collection, 'sync', this.render, this);
+      this.collection.fetch();
+    },
+
+    render: function () {
+      this.$el.html(this.template({'books': this.collection.toJSON()}));
+      return this;
+    },
 
   });
 

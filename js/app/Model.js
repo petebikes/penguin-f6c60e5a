@@ -6,6 +6,10 @@ define(function (require) {
   Model = Backbone.Model.extend({
     defaults: {
 
+    },
+
+    parse: function (data) {
+      return _.extend(data, _.result(data, 'volumeInfo'));
     }
 
   });
